@@ -1,6 +1,4 @@
-
 import { ReactNode, useState } from "react";
-import { Sidebar } from "../ui/sidebar";
 import { DashboardSidebar } from "./DashboardSidebar";
 import { Bell, Menu, User } from "lucide-react";
 import { Button } from "../ui/button";
@@ -14,6 +12,7 @@ import {
   DropdownMenuTrigger 
 } from "../ui/dropdown-menu";
 import { Link } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -27,15 +26,18 @@ export function DashboardLayout({ children, title }: DashboardLayoutProps) {
   
   return (
     <div className="flex min-h-screen w-full bg-accent/30">
-      <DashboardSidebar open={sidebarOpen} />
+      <DashboardSidebar open={sidebarOpen} onToggle={toggleSidebar} />
       
-      <div className="flex-1 flex flex-col min-h-screen">
+      <div className={cn(
+        "flex-1 flex flex-col min-h-screen transition-all duration-300",
+        sidebarOpen ? "ml-64" : "ml-16"
+      )}>
         <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background px-4 sm:px-6">
           <Button
             variant="outline" 
             size="icon" 
             onClick={toggleSidebar}
-            className="mr-2"
+            className="lg:hidden"
           >
             <Menu className="h-5 w-5" />
             <span className="sr-only">Toggle sidebar</span>
